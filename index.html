@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TaskMaster Pro - Premium Modern Productivity Dashboard" />
+  <title>TaskMaster Pro Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-shape bg-shape-3"></div>
+  <div class="bg-shape bg-shape-4"></div>
+  <div class="bg-grid"></div>
+
+  <div id="login-screen" class="auth-screen">
+    <div class="auth-card glass-card">
+      <div class="auth-logo gradient-bg"><i data-lucide="check-square"></i></div>
+      <span class="auth-badge">TaskMaster Pro</span>
+      <h1>Welcome back</h1>
+      <p>Sign in to manage your productivity dashboard.</p>
+
+      <form id="login-form" class="auth-form">
+        <div class="auth-field">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" value="admin@taskmaster.com" required />
+        </div>
+
+        <div class="auth-field">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" value="admin123" required />
+        </div>
+
+        <div id="login-error" class="login-error hidden">Invalid email or password.</div>
+
+        <button type="submit" class="primary-btn auth-btn">Sign In</button>
+      </form>
+
+      <div class="demo-credentials">
+        <span>Demo account</span>
+        <strong>admin@taskmaster.com / admin123</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-container gradient-bg">
+          <i data-lucide="check-square"></i>
+        </div>
+        <div class="logo-text">
+          <h2 class="gradient-text">TaskMaster Pro</h2>
+          <span class="subtitle">Plan smarter. Get more done.</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="dashboard"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+        <button class="nav-item" data-view="tasks"><i data-lucide="check-square"></i><span>My Tasks</span></button>
+        <button class="nav-item" data-view="analytics"><i data-lucide="pie-chart"></i><span>Analytics</span></button>
+        <button class="nav-item" data-view="calendar"><i data-lucide="calendar"></i><span>Calendar</span></button>
+        <button class="nav-item" data-view="important"><i data-lucide="star"></i><span>Important</span></button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-item" data-view="settings"><i data-lucide="settings"></i><span>Settings</span></button>
+      </div>
+    </aside>
+
+    <main class="app-container">
+      <header class="header glass-card">
+        <div class="header-left">
+          <h1 id="page-title">Dashboard Overview</h1>
+          <p class="subtitle" id="page-subtitle">Here’s what’s happening today.</p>
+        </div>
+        <div class="header-right">
+          <div class="current-date" id="current-date">Loading date...</div>
+          <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+            <i data-lucide="moon" id="moon-icon"></i>
+            <i data-lucide="sun" id="sun-icon" class="hidden"></i>
+          </button>
+          <button id="logout-btn" class="icon-btn profile-btn" aria-label="Logout" title="Logout">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+      </header>
+
+      <section class="view-pane active" id="dashboard-view">
+        <div class="hero-banner glass-card">
+          <div class="hero-copy">
+            <span class="eyebrow">Productivity Pulse</span>
+            <h2>Focus on what matters most.</h2>
+            <p>Turn every priority into momentum with a calm, organized way to plan your work.</p>
+            <button class="primary-btn">Review Today</button>
+          </div>
+          <div class="hero-image"></div>
+        </div>
+
+        <div class="stats-section">
+          <div class="stat-card glass-card">
+            <div class="stat-header">
+              <span class="stat-title">Total Tasks</span>
+              <div class="stat-icon"><i data-lucide="layers"></i></div>
+            </div>
+            <div class="stat-value" id="total-tasks">0</div>
+            <div class="stat-footer">Track your workload</div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-header">
+              <span class="stat-title">Completed</span>
+              <div class="stat-icon success-icon"><i data-lucide="check-circle-2"></i></div>
+            </div>
+            <div class="stat-value" id="completed-tasks">0</div>
+            <div class="stat-footer" id="completion-rate">0% completion rate</div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-header">
+              <span class="stat-title">Pending</span>
+              <div class="stat-icon warning-icon"><i data-lucide="clock"></i></div>
+            </div>
+            <div class="stat-value" id="pending-tasks">0</div>
+            <div class="stat-footer">Tasks to do</div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-header">
+              <span class="stat-title">Overdue</span>
+              <div class="stat-icon danger-icon"><i data-lucide="alert-circle"></i></div>
+            </div>
+            <div class="stat-value" id="overdue-tasks">0</div>
+            <div class="stat-footer danger-text" id="overdue-footer">Needs attention</div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-header">
+              <span class="stat-title">High Priority</span>
+              <div class="stat-icon priority-high-icon"><i data-lucide="flag"></i></div>
+            </div>
+            <div class="stat-value" id="high-priority-tasks">0</div>
+            <div class="stat-footer">Critical tasks</div>
+          </div>
+
+          <div class="stat-card score-card glass-card">
+            <div class="stat-header">
+              <span class="stat-title">Today's Productivity</span>
+              <div class="stat-icon primary-icon"><i data-lucide="activity"></i></div>
+            </div>
+            <div class="productivity-content">
+              <div class="circular-progress" id="score-progress">
+                <div class="inner-circle">
+                  <span id="productivity-score">0</span><span class="score-max">%</span>
+                </div>
+              </div>
+              <div class="productivity-details">
+                <div class="streak-badge"><i data-lucide="flame"></i> <span id="streak-days-badge">0</span> Day Streak</div>
+                <div class="stat-footer" id="score-message">Keep it up!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="analytics-section">
+          <div class="card chart-card glass-card">
+            <div class="card-header">
+              <h2>Weekly Productivity</h2>
+              <i data-lucide="bar-chart-3"></i>
+            </div>
+            <div class="chart-container">
+              <canvas id="weekly-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="card chart-card glass-card">
+            <div class="card-header">
+              <h2>Task Distribution</h2>
+              <i data-lucide="pie-chart"></i>
+            </div>
+            <div class="chart-container">
+              <canvas id="donut-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-layout">
+          <div class="left-col">
+            <section class="card add-task-card glass-card">
+              <div class="card-header">
+                <h2 class="with-icon"><i data-lucide="plus-square"></i> Create New Task</h2>
+              </div>
+              <form id="add-task-form">
+                <div class="form-group title-group">
+                  <i data-lucide="pen-line" class="input-icon"></i>
+                  <input type="text" id="task-title" placeholder="What needs to be done?" required autocomplete="off" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <i data-lucide="folder" class="input-icon"></i>
+                    <select id="task-category">
+                      <option value="Work">Work</option>
+                      <option value="Personal">Personal</option>
+                      <option value="Study">Study</option>
+                      <option value="Project">Project</option>
+                      <option value="Health">Health</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <i data-lucide="flag" class="input-icon"></i>
+                    <select id="task-priority">
+                      <option value="Low">Low Priority</option>
+                      <option value="Medium" selected>Medium Priority</option>
+                      <option value="High">High Priority</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <i data-lucide="calendar" class="input-icon"></i>
+                    <input type="date" id="task-date" />
+                  </div>
+                  <button type="submit" class="btn primary-btn gradient-btn">
+                    <i data-lucide="plus"></i> Add Task
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <section class="card task-list-card glass-card">
+              <div class="list-controls">
+                <div class="search-box">
+                  <i data-lucide="search" class="search-icon"></i>
+                  <input type="text" id="search-input" placeholder="Search tasks..." />
+                </div>
+                <div class="filter-controls">
+                  <select id="category-filter" class="category-filter">
+                    <option value="All">All Categories</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Study">Study</option>
+                    <option value="Project">Project</option>
+                    <option value="Health">Health</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="status-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                    <button class="filter-btn" data-filter="overdue">Overdue</button>
+                    <button class="filter-btn" data-filter="high">High Priority</button>
+                  </div>
+                </div>
+              </div>
+
+              <ul id="task-list" class="task-list"></ul>
+              <div id="empty-state" class="empty-state hidden">
+                <div class="empty-icon-wrap"><i data-lucide="sparkles"></i></div>
+                <h3>You're all caught up!</h3>
+                <p>No tasks are waiting for you.</p>
+                <button class="btn secondary-btn mt-2" type="button" onclick="document.getElementById('task-title').focus()">+ Create Your First Task</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="right-col">
+            <section class="card streak-card glass-card premium-streak-card">
+              <div class="streak-header">
+                <div class="streak-icon"><i data-lucide="flame"></i></div>
+                <h2>Productivity Streak</h2>
+              </div>
+              <div class="streak-value"><span id="streak-days">0</span> Days</div>
+              <p class="streak-message" id="streak-message">Complete tasks to start a streak!</p>
+            </section>
+
+            <section class="card upcoming-card glass-card">
+              <div class="card-header">
+                <h2>Upcoming Deadlines</h2>
+                <i data-lucide="calendar-clock"></i>
+              </div>
+              <ul id="upcoming-list" class="upcoming-list"></ul>
+              <div id="upcoming-empty" class="empty-upcoming hidden">
+                <p>No upcoming deadlines.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-pane" id="tasks-view">
+        <div class="content-panel glass-card">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Workspace</span>
+              <h2>My Tasks</h2>
+            </div>
+            <button class="primary-btn" id="quick-add-btn" type="button">+ Add Task</button>
+          </div>
+          <div id="tasks-page-list" class="stack-list"></div>
+        </div>
+      </section>
+
+      <section class="view-pane" id="analytics-view">
+        <div class="content-panel glass-card">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Insights</span>
+              <h2>Analytics</h2>
+            </div>
+          </div>
+          <div class="analytics-overview" id="analytics-metrics"></div>
+          <div class="analytics-grid">
+            <div class="chart-panel glass-card">
+              <h3>Weekly performance</h3>
+              <canvas id="analytics-weekly-chart"></canvas>
+            </div>
+            <div class="chart-panel glass-card">
+              <h3>Task split</h3>
+              <canvas id="analytics-donut-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-pane" id="calendar-view">
+        <div class="content-panel glass-card">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Schedule</span>
+              <h2>Calendar</h2>
+            </div>
+          </div>
+          <div class="calendar-wrap">
+            <div>
+              <div class="calendar-month-header" id="calendar-month-header" aria-live="polite"></div>
+              <div class="calendar-weekdays">
+                <div class="weekday">Sun</div>
+                <div class="weekday">Mon</div>
+                <div class="weekday">Tue</div>
+                <div class="weekday">Wed</div>
+                <div class="weekday">Thu</div>
+                <div class="weekday">Fri</div>
+                <div class="weekday">Sat</div>
+              </div>
+              <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+            <div class="calendar-side">
+              <h3>Upcoming items</h3>
+              <div id="calendar-events" class="mini-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-pane" id="important-view">
+        <div class="content-panel glass-card">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Priority</span>
+              <h2>Important</h2>
+            </div>
+          </div>
+          <div class="important-hero"></div>
+          <div id="important-list" class="stack-list"></div>
+        </div>
+      </section>
+
+      <section class="view-pane" id="settings-view">
+        <div class="content-panel glass-card">
+          <div class="panel-header">
+            <div>
+              <span class="eyebrow">Control</span>
+              <h2>Settings</h2>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="setting-row">
+              <span>Dark mode</span>
+              <button class="toggle-button" id="settings-theme-toggle" type="button">Toggle</button>
+            </div>
+            <div class="setting-row">
+              <span>Notifications</span>
+              <button class="toggle-button active" type="button">Enabled</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="premium-footer">
+        <div class="footer-content">
+          <div class="footer-logo"><i data-lucide="check-square"></i> TaskMaster Pro</div>
+          <p class="footer-tagline">“Plan smarter. Get more done.”</p>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <div id="edit-modal" class="modal hidden">
+    <div class="modal-content card">
+      <div class="modal-header">
+        <h2>Edit Task</h2>
+        <button id="close-modal" class="icon-btn" type="button"><i data-lucide="x"></i></button>
+      </div>
+      <form id="edit-task-form">
+        <input type="hidden" id="edit-task-id" />
+        <div class="form-group title-group">
+          <label for="edit-task-title">Title</label>
+          <div class="input-with-icon">
+            <i data-lucide="pen-line" class="input-icon"></i>
+            <input type="text" id="edit-task-title" required autocomplete="off" />
+          </div>
+        </div>
+        <div class="form-row-col">
+          <div class="form-group">
+            <label for="edit-task-category">Category</label>
+            <div class="input-with-icon">
+              <i data-lucide="folder" class="input-icon"></i>
+              <select id="edit-task-category">
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Study">Study</option>
+                <option value="Project">Project</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-task-priority">Priority</label>
+            <div class="input-with-icon">
+              <i data-lucide="flag" class="input-icon"></i>
+              <select id="edit-task-priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-task-date">Due Date</label>
+            <div class="input-with-icon">
+              <i data-lucide="calendar" class="input-icon"></i>
+              <input type="date" id="edit-task-date" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancel-edit" class="btn secondary-btn">Cancel</button>
+          <button type="submit" class="btn primary-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
