@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExpenseFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">₹</span><span>ExpenseFlow</span></a>
+      <nav class="nav-list" aria-label="Primary navigation">
+        <a class="nav-item active" data-view="overview" href="#overview"><span class="nav-icon">+</span> Overview</a>
+        <a class="nav-item" data-view="transactions" href="#transactions"><span class="nav-icon">=</span> Transactions</a>
+        <a class="nav-item" data-view="insights" href="#insights"><span class="nav-icon">~</span> Insights</a>
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-dot"></span>
+        <div><strong>Money, made clear.</strong><p>Your data stays on this device.</p></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow">SMART MONEY MANAGEMENT MADE SIMPLE</p><h1>Financial overview</h1><p class="header-status">Your money at a glance <span>•</span> September 2026</p></div>
+        <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Toggle navigation">menu</button>
+        <button class="avatar" type="button" aria-label="Account menu">AL</button>
+      </header>
+
+      <section class="hero-row" id="overview">
+        <div><p class="eyebrow accent">YOUR FINANCIAL PICTURE</p><h2>Stay close to<br><em>what matters.</em></h2></div>
+        <div class="hero-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-wallet"><span>₹</span></div><div class="art-spark spark-one">+</div><div class="art-spark spark-two">₹</div></div>
+        <button class="primary-btn" id="open-add" type="button"><span>+</span> Add transaction</button>
+      </section>
+
+      <section class="summary-grid" aria-label="Financial summary">
+        <article class="summary-card balance-card"><div class="card-label"><span class="label-icon balance-icon">₹</span><span>Current balance</span></div><strong id="balance-value">₹0.00</strong><p class="card-trend" id="balance-trend">Across all accounts</p></article>
+        <article class="summary-card"><div class="card-label"><span class="label-icon income-icon">&#8593;</span><span>Total income</span></div><strong id="income-value">$0.00</strong><p class="card-trend positive">This month</p></article>
+        <article class="summary-card"><div class="card-label"><span class="label-icon expense-icon">&#8595;</span><span>Total expenses</span></div><strong id="expense-value">$0.00</strong><p class="card-trend neutral">This month</p></article>
+        <article class="summary-card transaction-total-card"><div class="card-label"><span class="label-icon total-icon">#</span><span>Transactions</span></div><strong id="transaction-total-value">0</strong><p class="card-trend neutral">All time activity</p></article>
+      </section>
+
+      <section class="analysis-grid" id="analysis" aria-label="Financial analysis">
+        <article class="chart-card">
+          <div class="section-heading"><div><p class="eyebrow">SPENDING PULSE</p><h3>Monthly trend</h3></div><span class="chart-period">Last 7 days</span></div>
+          <div class="chart-wrap"><div class="chart-y-labels"><span>₹500</span><span>₹250</span><span>₹0</span></div><svg class="spending-chart" viewBox="0 0 700 190" role="img" aria-label="Daily expenses line chart"><defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#16835f" stop-opacity=".22"/><stop offset="1" stop-color="#16835f" stop-opacity="0"/></linearGradient></defs><path class="chart-area" id="chart-area" d="M0 170 L0 170 L116 170 L233 170 L350 170 L466 170 L583 170 L700 170 Z"/><path class="chart-line" id="chart-line" d="M0 170 L116 170 L233 170 L350 170 L466 170 L583 170 L700 170"/><g class="chart-dots" id="chart-dots"></g></svg></div><div class="chart-x-labels" id="chart-x-labels"></div>
+        </article>
+        <article class="breakdown-card">
+          <div class="section-heading"><div><p class="eyebrow">WHERE IT GOES</p><h3>By category</h3></div></div>
+          <div class="pie-summary"><div class="pie-chart" id="pie-chart"><span id="pie-total">$0</span></div><div class="pie-legend" id="pie-legend"></div></div>
+          <div class="category-bars" id="category-bars"></div>
+        </article>
+      </section>
+
+      <section class="goal-strip" id="goal"><div class="goal-icon">&#10003;</div><div class="goal-copy"><p class="eyebrow">MONTHLY CHECK-IN</p><strong>Keep expenses under ₹2,000</strong></div><div class="goal-progress"><div class="progress-track"><span id="goal-progress"></span></div><small id="goal-label">0% used</small></div><span class="goal-status" id="goal-status">On track</span></section>
+
+      <section class="content-grid">
+        <div class="transactions-panel" id="transactions">
+          <div class="section-heading"><div><p class="eyebrow">ACTIVITY</p><h3>Recent transactions</h3></div><span class="transaction-count" id="transaction-count">0 entries</span></div>
+          <div class="filter-row"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="income">Income</button><button class="filter-btn" data-filter="expense">Expenses</button><select id="category-filter" aria-label="Filter by expense category"><option value="all">All categories</option><option>Food</option><option>Food & dining</option><option>Shopping</option><option>Transport</option><option>Bills</option><option>Entertainment</option><option>Health</option><option>Education</option><option>Salary</option><option>Housing</option><option>Other</option></select></div>
+          <div class="transaction-list" id="transaction-list"></div>
+        </div>
+        <aside class="insight-panel" id="insights"><div class="insight-top"><span class="spark-icon">*</span><span>QUICK INSIGHT</span></div><h3 id="insight-title">Your spending story</h3><p id="insight-text">Add a few transactions and ExpenseFlow will surface a useful pattern here.</p><div class="weekly-review-box"><div class="weekly-review-heading"><span>WEEKLY REVIEW</span><strong>Last 7 days</strong></div><div class="weekly-stats"><div><strong id="weekly-spent">₹0</strong><span>Spent</span></div><div><strong id="weekly-count">0</strong><span>Entries</span></div><div><strong id="weekly-average">₹0</strong><span>Daily avg.</span></div></div></div><div class="insight-line"></div><div class="insight-meta"><span>Tip of the day</span><button class="weekly-review" id="weekly-review" type="button">Review weekly <span>&rarr;</span></button></div></aside>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modal" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="close-btn" id="close-modal" type="button" aria-label="Close">x</button><p class="eyebrow accent">NEW ENTRY</p><h2 id="modal-title">Add a transaction</h2><form id="transaction-form"><div class="type-toggle"><label><input type="radio" name="type" value="expense" checked><span>Expense</span></label><label><input type="radio" name="type" value="income"><span>Income</span></label></div><label class="field-label">Description<input name="description" required placeholder="e.g. Weekly groceries"></label><div class="form-row"><label class="field-label">Amount<input name="amount" type="number" min="0.01" step="0.01" required placeholder="0.00"></label><label class="field-label">Date<input name="date" type="date" required></label></div><label class="field-label">Category<select name="category" required><option>Food</option><option>Shopping</option><option>Transport</option><option>Bills</option><option>Entertainment</option><option>Health</option><option>Education</option><option>Salary</option><option>Other</option></select></label><button class="primary-btn full-width" type="submit" id="submit-transaction">Save transaction</button></form></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><span class="toast-icon">&#10003;</span><span id="toast-text">Transaction saved</span></div>
+  <style>
+    .summary-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .summary-card>strong{font-size:24px}
+    .view-hidden{display:none!important}.transactions-focus{grid-template-columns:1fr}.transactions-focus .transactions-panel{max-width:none}.transactions-focus .section-heading{margin-bottom:26px}
+    .weekly-review{border:0;background:transparent;color:#b8b0ff;font-size:11px;font-weight:700;padding:0;cursor:pointer;transition:color .2s,transform .2s}.weekly-review span{display:inline-block;margin-left:4px;transition:transform .2s}.weekly-review:hover{color:#fff}.weekly-review:hover span{transform:translateX(3px)}
+    .hero-art{position:relative;width:170px;height:118px;margin-left:auto;margin-right:28px;flex-shrink:0;animation:hero-float 5s ease-in-out infinite}.art-orbit{position:absolute;border:1px solid #8b7cf65c;border-radius:50%;transform:rotate(-25deg)}.orbit-one{width:160px;height:72px;top:20px;left:0;animation:orbit-spin 12s linear infinite}.orbit-two{width:125px;height:55px;top:28px;left:18px;border-color:#35c49a5c;transform:rotate(28deg);animation:orbit-spin-reverse 9s linear infinite}.art-wallet{position:absolute;left:56px;top:28px;width:66px;height:48px;border-radius:12px;background:linear-gradient(145deg,#8b7cf6,#4d4a9d);box-shadow:0 12px 24px #080d205e;transform:rotate(-8deg);display:grid;place-items:center;animation:wallet-bob 3.2s ease-in-out infinite}.art-wallet:before{content:"";position:absolute;inset:8px;border:1px solid #ffffff40;border-radius:7px}.art-wallet span{font:600 21px 'Space Grotesk';color:#fff;z-index:1}.art-spark{position:absolute;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:700;box-shadow:0 6px 12px #080d205e}.spark-one{right:8px;top:12px;background:#f4c95d;color:#302a59;transform:rotate(12deg);animation:spark-drift 3s ease-in-out infinite}.spark-two{left:30px;bottom:9px;background:#35c49a;color:#0e2730;transform:rotate(-12deg);animation:spark-drift 3s ease-in-out .8s infinite}.chart-line{stroke-dasharray:900;stroke-dashoffset:900;animation:chart-draw 1.5s ease-out .15s forwards}.chart-area{opacity:0;animation:area-reveal 1.2s ease-out .25s forwards}.summary-card,.chart-card,.breakdown-card,.goal-strip,.content-grid{animation:section-rise .55s ease both}.summary-card:nth-child(2){animation-delay:.08s}.summary-card:nth-child(3){animation-delay:.16s}.summary-card:nth-child(4){animation-delay:.24s}@keyframes hero-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}@keyframes wallet-bob{0%,100%{transform:rotate(-8deg) translateY(0)}50%{transform:rotate(-8deg) translateY(-5px)}}@keyframes orbit-spin{from{transform:rotate(-25deg)}to{transform:rotate(335deg)}}@keyframes orbit-spin-reverse{from{transform:rotate(28deg)}to{transform:rotate(-332deg)}}@keyframes spark-drift{0%,100%{transform:translate(0) rotate(12deg)}50%{transform:translate(4px,-6px) rotate(20deg)}}@keyframes chart-draw{to{stroke-dashoffset:0}}@keyframes area-reveal{to{opacity:1}}@keyframes section-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @media(prefers-reduced-motion:reduce){.hero-art,.art-orbit,.art-wallet,.art-spark,.chart-line,.chart-area,.summary-card,.chart-card,.breakdown-card,.goal-strip,.content-grid{animation:none}.chart-line{stroke-dashoffset:0}.chart-area{opacity:1}}
+    @media(max-width:700px){.hero-art{display:none}}
+  </style>
+  <script src="app.js"></script>
+</body>
+</html>
